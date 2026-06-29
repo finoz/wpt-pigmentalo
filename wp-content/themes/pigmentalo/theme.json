@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "primary",     "color": "#000000", "name": "Primary" },
+        { "slug": "secondary",   "color": "#333333", "name": "Secondary" },
+        { "slug": "accent",      "color": "#666666", "name": "Accent" },
+        { "slug": "surface",     "color": "#F5F5F5", "name": "Surface" },
+        { "slug": "surface-alt", "color": "#E5E5E5", "name": "Surface Alt" },
+        { "slug": "text",        "color": "#111111", "name": "Text" },
+        { "slug": "text-light",  "color": "#555555", "name": "Text Light" },
+        { "slug": "white",       "color": "#FFFFFF", "name": "White" }
+      ],
+      "gradients": [
+        {
+          "slug": "brand",
+          "gradient": "linear-gradient(135deg, #000000 0%, #333333 100%)",
+          "name": "Brand"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "slug": "sans",
+          "name": "General Sans",
+          "fontFamily": "'General Sans', system-ui, sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "General Sans",
+              "fontWeight": "300 700",
+              "fontStyle": "normal",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/GeneralSans-Variable.woff2"]
+            },
+            {
+              "fontFamily": "General Sans",
+              "fontWeight": "300 700",
+              "fontStyle": "italic",
+              "fontDisplay": "swap",
+              "src": ["file:./assets/fonts/GeneralSans-VariableItalic.woff2"]
+            }
+          ]
+        },
+        {
+          "slug": "serif",
+          "name": "General Sans",
+          "fontFamily": "'General Sans', system-ui, sans-serif"
+        }
+      ]
+    }
+  }
+}

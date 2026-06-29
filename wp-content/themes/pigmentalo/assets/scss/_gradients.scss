@@ -1,0 +1,15 @@
+// Pigmentalo — gradienti
+// I valori vengono da theme.json → var(--wp--preset--gradient--*)
+
+// Utility class per applicare il gradient brand a sfondi
+.has-brand-gradient-background {
+    background: var(--wp--preset--gradient--brand);
+}
+
+// Testo con gradient (clip)
+.has-brand-gradient-text {
+    background: var(--wp--preset--gradient--brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
