@@ -1,52 +1,107 @@
-// Button block
-// Stili base + le varianti registrate in block-styles.php
+// Button block — pigmentalo
+// 3 varianti: fill (gradient), outline (bordo viola solid), text (→)
+// Tutte uppercase, font-weight 400, font-size md, General Sans
+// Nessun border-radius (brand pigmentalo)
+
+// Gradient angle animabile tramite CSS Houdini @property
+// Supporto: Chrome 111+, Firefox 113+, Safari 16.2+
+@property --btn-angle {
+  syntax: '<angle>';
+  initial-value: -45deg;
+  inherits: false;
+}
 
 .wp-block-button__link {
   font-family: var(--wp--preset--font-family--sans);
-  font-size: var(--wp--preset--font-size--base);
-  font-weight: 600;
-  padding: var(--wp--preset--spacing--3) var(--wp--preset--spacing--6);
-  border-radius: var(--wp--custom--radius--sm);
-  transition: all var(--wp--custom--transition);
+  font-size: var(--wp--preset--font-size--md);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
   cursor: pointer;
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  border-radius: 0;
+  transition:
+    --btn-angle      300ms ease,
+    color            var(--wp--custom--transition),
+    background-color var(--wp--custom--transition),
+    border-color     var(--wp--custom--transition),
+    transform        var(--wp--custom--transition),
+    box-shadow       var(--wp--custom--transition);
 }
 
-// Stile di default (filled)
-.wp-block-button:not([class*="is-style"]) .wp-block-button__link {
-  background-color: var(--wp--preset--color--primary);
+// ── Fill (default) — gradient brand, angolo animato in hover ─────────────────
+
+.wp-block-button:not([class*="is-style"]) .wp-block-button__link,
+.wp-block-button.is-style-fill .wp-block-button__link {
+  --btn-angle: -45deg;
+  background: linear-gradient(
+    var(--btn-angle),
+    var(--wp--preset--color--primary),
+    var(--wp--preset--color--secondary)
+  );
   color: var(--wp--preset--color--white);
-  border: 2px solid var(--wp--preset--color--primary);
+  padding: 2.0rem 3.2rem;
 
   &:hover {
-    background-color: var(--wp--preset--color--secondary);
-    border-color: var(--wp--preset--color--secondary);
-    color: var(--wp--preset--color--white);
+    --btn-angle: -135deg;
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.6rem 2.0rem rgba(135, 35, 90, 0.3);
+  }
+
+  &:active {
+    --btn-angle: -90deg;
+    transform: translateY(0);
+    box-shadow: none;
   }
 }
 
-// Variante outline
+// ── Outline — bordo viola solid (no gradient per semplicità) ──────────────────
+
 .wp-block-button.is-style-outline .wp-block-button__link {
   background-color: transparent;
   color: var(--wp--preset--color--primary);
   border: 2px solid var(--wp--preset--color--primary);
+  padding: 2.0rem 3.2rem;
 
   &:hover {
     background-color: var(--wp--preset--color--primary);
     color: var(--wp--preset--color--white);
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.6rem 2.0rem rgba(135, 35, 90, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
   }
 }
 
-// Variante text-link
+// ── Text inline — freccia a destra in ::after ─────────────────────────────────
+// Nessun ::before. Hover: la freccia scivola a destra.
+
 .wp-block-button.is-style-text-link .wp-block-button__link {
   background: none;
   border: none;
   color: var(--wp--preset--color--primary);
   padding: 0;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 500;
+
+  &::after {
+    content: " →";
+    display: inline-block;
+    transition: transform var(--wp--custom--transition);
+  }
 
   &:hover {
     color: var(--wp--preset--color--secondary);
+
+    &::after { transform: translateX(0.4rem); }
+  }
+
+  &:active {
+    &::after { transform: translateX(0.2rem); }
   }
 }
