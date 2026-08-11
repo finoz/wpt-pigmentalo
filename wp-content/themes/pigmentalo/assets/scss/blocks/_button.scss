@@ -3,11 +3,6 @@
     margin-inline: unset;
 }
 
-// Button block — pigmentalo
-// 3 varianti: fill (gradient), outline (bordo viola solid), text (→)
-// Tutte uppercase, font-weight 400, font-size md, General Sans
-// Nessun border-radius (brand pigmentalo)
-
 // Gradient angle animabile tramite CSS Houdini @property
 // Supporto: Chrome 111+, Firefox 113+, Safari 16.2+
 @property --btn-angle {

@@ -88,10 +88,6 @@
 [class*="wp-block"] {
 	&.has-background {
 		padding: 3.2rem;
-		border-radius: var(--wp--custom--radius--md);
-		&.alignfull {
-			border-radius: 0;
-		}
 	}
 }
 
