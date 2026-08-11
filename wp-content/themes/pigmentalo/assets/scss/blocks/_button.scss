@@ -49,12 +49,12 @@
     var(--wp--preset--color--secondary)
   );
   color: var(--wp--preset--color--white);
-  padding: 2.0rem 3.2rem;
+  padding: 2rem 3.2rem;
 
   &:hover {
     --btn-angle: -135deg;
     transform: translateY(-0.2rem);
-    box-shadow: 0 0.6rem 2.0rem rgba(135, 35, 90, 0.3);
+    box-shadow: 0 0.6rem 2rem rgba(135, 35, 90, 0.3);
   }
 
   &:active {
@@ -70,13 +70,13 @@
   background-color: transparent;
   color: var(--wp--preset--color--primary);
   border: 2px solid var(--wp--preset--color--primary);
-  padding: 2.0rem 3.2rem;
+  padding: 2rem 3.2rem;
 
   &:hover {
     background-color: var(--wp--preset--color--primary);
     color: var(--wp--preset--color--white);
     transform: translateY(-0.2rem);
-    box-shadow: 0 0.6rem 2.0rem rgba(135, 35, 90, 0.2);
+    box-shadow: 0 0.6rem 2rem rgba(135, 35, 90, 0.2);
   }
 
   &:active {

@@ -1,6 +1,12 @@
 // Reset minimale - non azzerare tutto, solo normalizzare
 // WP block theme ha già i suoi stili base
 
+// Root 10px: 1rem = 10px (62.5% di 16px default browser)
+// Se l'utente ha un default diverso, la proporzione si mantiene.
+html {
+  font-size: 62.5%;
+}
+
 *,
 *::before,
 *::after {

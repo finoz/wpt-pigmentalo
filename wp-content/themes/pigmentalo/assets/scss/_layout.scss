@@ -1,6 +1,396 @@
-// Layout globale del sito
+// Layout globale - sezioni e struttura pagina
+
+// ── Z-index scale ─────────────────────────────────────────────────────────────
+// Scala intera, crescente per unità. Aggiungere qui ogni nuovo livello.
+
+:root {
+	// Z-index
+	--z-overlay:    2;  // overlay mobile nav
+	--z-header:     3;  // header sticky
+	--z-menutoggle: 4;  // toggle mobile nav
+	--z-modal:      5;  // modali, popup, toast
+	--z-tooltip:    6;  // tooltip
+
+	// Padding laterale layout — usato da header e grid contenuto
+	--site-padding: 2.4rem;
+	@media (min-width: 768px) {
+		--site-padding: 8rem;
+	}
+
+	// Alias variabili grid con fallback hardcoded
+	// Le variabili --wp--* vengono generate da WP nel <head>;
+	// il fallback garantisce che il grid funzioni anche se non disponibili.
+	--grid-reading: var(--wp--custom--reading-size, 720px);
+	--grid-content: var(--wp--style--global--content-size, 1280px);
+	--grid-wide:    var(--wp--style--global--wide-size, 1440px);
+
+	// Scala di spaziatura — fluid, sovrascrive i valori fissi generati da WP.
+	// theme.json definisce i valori desktop (massimi del clamp) come riferimento
+	// per l'editor; qui li rendiamo fluid per il frontend.
+	// Alias corti --space-* per uso nel CSS, puntano alle stesse variabili WP.
+	--wp--preset--spacing--s:  clamp(1.6rem, 2vw,   2.4rem);
+	--wp--preset--spacing--m:  clamp(2.4rem, 3.5vw, 4.0rem);
+	--wp--preset--spacing--l:  clamp(4.0rem, 5.5vw, 6.4rem);
+	--wp--preset--spacing--xl: clamp(6.4rem, 8vw,   9.6rem);
+
+	--space-s:  var(--wp--preset--spacing--s);
+	--space-m:  var(--wp--preset--spacing--m);
+	--space-l:  var(--wp--preset--spacing--l);
+	--space-xl: var(--wp--preset--spacing--xl);
+}
+
+// Rimuove gap default tra blocchi a livello root
+.wp-site-blocks {
+   display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  > * + * {
+    margin-block-start: 0;
+  }
+}
+
+// admin setup - forziamo due robe per poter lavorare adeguatamente in editor
+.editor-styles-wrapper {
+	.editor-visual-editor__post-title-wrapper {
+		display: block;
+		background: #f0f0f0;
+		border-bottom: 1px dotted #ccc;
+		padding: 1em;
+		margin: 0 0 2rem 0;
+	}
+	.is-root-container {
+		display: grid !important;
+		row-gap: 1rem; // non reale, ma separa un minimo i blocchi in editor
+	}
+	.block-editor-block-list__block {
+		row-gap: 1rem; // non reale, ma separa un minimo i blocchi in editor
+	}
+	// Nasconde il placeholder "Aggiungi testo link Leggi tutto" del wp:post-excerpt.
+	// Non usiamo moreText: sul frontend l'elemento non viene renderizzato se vuoto.
+	.wp-block-post-excerpt__more-text {
+		display: none;
+	}
+}
+
+// Wrapper "trasparenti" — nessun padding né max-width proprio, passano il layout ai figli
+.site-main,
+.post-single__header,
+.post-navigation {
+	width: 100%;
+}
 
 .site-main {
-  min-height: 60vh;
-  padding-block: var(--wp--preset--spacing--8);
+	flex: 1; // cresce per spingere il footer in fondo
+}
+
+// elementi con bg colorato
+
+[class*="wp-block"] {
+	&.has-background {
+		padding: 3.2rem;
+		border-radius: var(--wp--custom--radius--md);
+		&.alignfull {
+			border-radius: 0;
+		}
+	}
+}
+
+// ── Grid contenuto ──────────────────────────────────────────────────────────
+// Applicato a wp:post-content (div.wp-block-post-content).
+// 4 livelli di larghezza, simmetrici:
+//   full     → da bordo a bordo, copre anche i padding esterni
+//   wide     → var(--wp--style--global--wide-size)
+//   content  → var(--wp--style--global--content-size)
+//   reading  → var(--wp--custom--reading-size)   [definito in theme.json settings.custom]
+
+.wp-block-post-content,
+.is-root-container,
+.post-single__header,
+.wp-block-post-content {
+	display: grid;
+
+	// Grid a step. L'algoritmo nativo di CSS Grid (Maximize Tracks) distribuisce lo
+	// spazio libero in parti UGUALI tra tutte le track minmax(0,X) della riga, quindi
+	// satura prima quelle con max più piccolo (i gutter, 80px/280px) molto prima che
+	// "reading" (720px) si avvicini al proprio — l'opposto della gerarchia che vogliamo
+	// (reading pieno → poi gutter content↔reading → poi gutter wide↔content).
+	// Per ottenere quest'ordine servono soglie esplicite invece di un'unica riga fluida.
+	// Soglie = grid-*-size + 2 × site-padding desktop (8rem = 80px):
+	//   720 + 160 = 880px, 1280 + 160 = 1440px, 1440 + 160 = 1600px.
+	// Se questi valori cambiano in theme.json vanno ricalcolate anche qui.
+	grid-template-columns:
+		[full-start]
+		minmax(var(--site-padding), 1fr)
+		[wide-start]
+		0px
+		[content-start]
+		0px
+		[reading-start]
+		minmax(0px, var(--grid-reading))
+		[reading-end]
+		0px
+		[content-end]
+		0px
+		[wide-end]
+		minmax(var(--site-padding), 1fr)
+		[full-end];
+
+	// Step 1 — reading ha raggiunto il suo max (720px): il gutter content↔reading
+	// inizia a crescere.
+	@media (min-width: 880px) {
+		grid-template-columns:
+			[full-start]
+			minmax(var(--site-padding), 1fr)
+			[wide-start]
+			0px
+			[content-start]
+			minmax(0px, calc((var(--grid-content) - var(--grid-reading)) / 2))
+			[reading-start]
+			var(--grid-reading)
+			[reading-end]
+			minmax(0px, calc((var(--grid-content) - var(--grid-reading)) / 2))
+			[content-end]
+			0px
+			[wide-end]
+			minmax(var(--site-padding), 1fr)
+			[full-end];
+	}
+
+	// Step 2 — content ha raggiunto il suo max (1280px): il gutter wide↔content
+	// inizia a crescere.
+	@media (min-width: 1440px) {
+		grid-template-columns:
+			[full-start]
+			minmax(var(--site-padding), 1fr)
+			[wide-start]
+			minmax(0px, calc((var(--grid-wide) - var(--grid-content)) / 2))
+			[content-start]
+			calc((var(--grid-content) - var(--grid-reading)) / 2)
+			[reading-start]
+			var(--grid-reading)
+			[reading-end]
+			calc((var(--grid-content) - var(--grid-reading)) / 2)
+			[content-end]
+			minmax(0px, calc((var(--grid-wide) - var(--grid-content)) / 2))
+			[wide-end]
+			minmax(var(--site-padding), 1fr)
+			[full-end];
+	}
+
+	// Step 3 — wide ha raggiunto il suo max (1440px): da qui in poi lo spazio in
+	// eccesso viene assorbito solo dal padding esterno (già gestito nativamente
+	// dalle track 1fr, che si espandono solo dopo che tutte le track non flessibili
+	// hanno raggiunto il proprio tetto).
+	@media (min-width: 1600px) {
+		grid-template-columns:
+			[full-start]
+			minmax(var(--site-padding), 1fr)
+			[wide-start]
+			calc((var(--grid-wide) - var(--grid-content)) / 2)
+			[content-start]
+			calc((var(--grid-content) - var(--grid-reading)) / 2)
+			[reading-start]
+			var(--grid-reading)
+			[reading-end]
+			calc((var(--grid-content) - var(--grid-reading)) / 2)
+			[content-end]
+			calc((var(--grid-wide) - var(--grid-content)) / 2)
+			[wide-end]
+			minmax(var(--site-padding), 1fr)
+			[full-end];
+	}
+
+	// Default: larghezza content
+	> * {
+		grid-column: wide-start / wide-end;
+		@media (min-width: 768px) {
+			grid-column: content-start / content-end;
+		}
+	}
+	
+	// Blocchi allargati
+	> .alignwide {
+		grid-column: wide-start / wide-end;
+	}
+	
+	> .alignfull {
+		grid-column: full-start / full-end;
+	}
+	
+	// Larghezza reading — stile "Reading" registrato via register_block_style
+	// Usa la colonna content ma con max-width: fluido fino a --grid-reading,
+	// poi si ferma e si centra. Nessun "passo" fisso nella grid.
+	> .is-style-reading-width {
+		grid-column: wide-start / wide-end;
+		@media (min-width: 768px) {
+			grid-column: reading-start / reading-end;
+		}
+	}
+}
+
+// ── Spaziatura verticale tra blocchi ─────────────────────────────────────────
+// Owl selector: margine solo tra elementi adiacenti, non prima del primo.
+// Specificità crescente: il selettore più specifico sovrascrive il default.
+
+.wp-block-post-content {
+
+	// Default tra blocchi generici
+	> * + * {
+		margin-block-start: var(--space-m);
+	}
+
+	// Stacca più generosamente prima di un heading (nuova sezione)
+	> * + :is(h2, h3) {
+		margin-block-start: var(--space-l);
+	}
+
+	// Heading consecutivi e heading → primo blocco: spazio ridotto
+	> :is(h1, h2, h3, h4, h5, h6) + *,
+	> :is(h1, h2, h3, h4, h5, h6) + :is(h2, h3, h4, h5, h6) {
+		margin-block-start: var(--space-s);
+	}
+
+	// Due full-bleed consecutivi: nessun gap doppio
+	> .alignfull + .alignfull {
+		margin-block-start: 0;
+	}
+
+	// Primo figlio: nessun margine sopra
+	> *:first-child {
+		margin-block-start: 0;
+	}
+}
+
+// ── General ──────────────────────────────────────────────────────────────────
+
+// flow: block layout, default - non fa nulla di speciale
+.is-layout-flow {
+  // vuoto intenzionalmente
+}
+
+// flex: già stai riscrivendo
+.is-layout-flex {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 2.4rem;
+	margin-inline: auto; // centratura default
+}
+
+// grid: usato dal query block (post-template)
+.is-layout-grid {
+  display: grid;
+  gap: 2.4rem;
+}
+
+.alignleft  {
+  margin-inline-end: auto;
+  align-self: flex-start;
+}
+.alignright {
+  margin-inline-start: auto;
+  align-self: flex-end;
+}
+.aligncenter { margin-inline: auto; }
+
+// Le due align che contano davvero in FSE
+.is-style-default { max-width: var(--wp--style--global--content-size); }
+.alignwide { max-width: var(--wp--style--global--wide-size); }
+.alignfull { max-width: none; width: 100%; }
+
+.has-text-align-right { text-align: right; }
+.has-text-align-center { text-align: center; }
+
+// editorial header
+.entry-header {
+	position: relative;
+	padding-inline: var(--site-padding);
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	gap: var(--space-s);
+	max-width: var(--wp--style--global--content-size);
+	margin-inline: auto;
+	font-family: var(--wp--preset--font-family--display);
+	padding-top: var(--space-xl);
+	padding-bottom: var(--space-l);
+	margin-bottom: var(--space-l);
+	&::before{
+		content: "";
+		position: absolute;
+		width: 100dvw;
+		height: 1px;
+		background: currentColor;
+		opacity: 0.1;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	&.archive-header {
+		padding-inline: 0;
+		width: 100%;
+		max-width: calc(var(--wp--style--global--content-size) - 2 * var(--site-padding));
+	}
+	.entry-header__meta {
+		margin: 0;
+		font-size: var(--wp--preset--font-size--xs);
+		font-weight: 500;
+		text-transform: uppercase;
+		gap: 0;
+		> * + * {
+			&::before {
+				content: "|";
+				padding-inline: 0.8rem;
+				display: inline-block;
+			}
+		}
+		a {
+			text-decoration: none;
+			pointer-events: none;
+		}
+	}
+	.entry-header__title {
+		color: var(--wp--preset--color--primary);
+		margin: 0;
+		text-transform: uppercase;
+		font-weight: 400;
+		background: var(--wp--preset--gradient--brand);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		b, strong {
+			font-weight: 700;
+		}
+	}
+	.entry-header__excerpt {
+		margin: 0;
+		font-size: var(--wp--preset--font-size--md);
+		font-weight: 500;
+		max-width: var(--grid-reading);
+	}
+}
+body.single {
+	.entry-header__title {
+		text-transform: unset;
+	}
+}
+// Blocchi di testo: reading-width di default nel post content.
+// Tutto il resto resta a content-width (default del selettore combinato sopra).
+// .is-style-reading-width disponibile per applicazione manuale su altri blocchi.
+// .alignwide e .alignfull sovrascrivono normalmente.
+.wp-block-post-content {
+	> :is(
+		.wp-block-paragraph,
+		.wp-block-heading,
+		.wp-block-list,
+		.wp-block-quote,
+		.wp-block-verse,
+		.wp-block-preformatted,
+		.wp-block-code
+	) {
+		grid-column: wide-start / wide-end;
+		@media (min-width: 768px) {
+			grid-column: reading-start / reading-end;
+		}
+	}
 }
