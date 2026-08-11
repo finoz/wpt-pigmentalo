@@ -1,0 +1,103 @@
+// Post card — verticale
+// Usata dentro Query Loop (archivio, componenti editoriali) e nel blocco PHP related-posts.
+
+.post-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	gap: var(--space-s);
+
+	// ── Immagine ──────────────────────────────────────────────────────────────
+
+	.wp-block-post-featured-image {
+		margin: 0;
+		overflow: hidden;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			aspect-ratio: 4 / 3;
+			transition: transform 150ms ease;
+		}
+
+		&:hover img {
+			transform: scale(1.03);
+		}
+	}
+
+	// ── Corpo ─────────────────────────────────────────────────────────────────
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 1.6rem;
+	}
+
+	// ── Categoria ─────────────────────────────────────────────────────────────
+
+	.wp-block-post-terms.post-card__category,
+	.post-card__category {
+		font-family: var(--wp--preset--font-family--display);
+		font-size: var(--wp--preset--font-size--xxs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--wp--preset--color--primary);
+		margin: 0;
+		display: flex;
+		flex-direction: row;
+		gap: 0.4rem;
+		flex-wrap: wrap;
+
+		[class*="separator"] {
+			display: none;
+		}
+
+		a {
+			padding: 0.5rem 0.8rem 0.4rem 0.8rem;
+			line-height: 1;
+			border: 1px solid currentColor;
+			display: inline-block;
+			color: inherit;
+			text-decoration: none;
+			pointer-events: none;
+		}
+	}
+
+	// ── Titolo ────────────────────────────────────────────────────────────────
+
+	.wp-block-post-title.post-card__title,
+	.post-card__title {
+		font-family: var(--wp--preset--font-family--display);
+		font-size: var(--wp--preset--font-size--md);
+		font-weight: 600;
+		line-height: 1.2;
+		margin: 0;
+
+		a {
+			color: var(--wp--preset--color--ink);
+			text-decoration: none;
+			&:hover {
+				color: var(--wp--preset--color--primary);
+			}
+		}
+	}
+
+	// ── Abstract ──────────────────────────────────────────────────────────────
+
+	.wp-block-post-excerpt.post-card__excerpt,
+	.post-card__excerpt {
+		font-size: var(--wp--preset--font-size--xs);
+		color: var(--wp--preset--color--ink-light);
+		line-height: 1.5;
+		margin: 0;
+
+		p { margin: 0; }
+
+		.wp-block-post-excerpt__more-link {
+			display: none;
+		}
+	}
+}

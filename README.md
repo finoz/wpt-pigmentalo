@@ -135,3 +135,14 @@ wpt-pigmentalo/
 ```
 
 > Il parent `wpt-ficus` non è incluso nel repo - viene montato via Docker da `../wpt-ficus`.
+
+### Symlink ficus (opzionale, consigliato)
+
+Docker monta ficus correttamente nel container, ma per navigare il codice del parent dall'IDE conviene creare un symlink locale:
+
+```bash
+cd wp-content/themes
+ln -s ../../../wpt-ficus ficus
+```
+
+Questo rende `wp-content/themes/ficus/` navigabile in locale e le modifiche a `wpt-ficus` si riflettono immediatamente senza restart. Il symlink può essere committato (git lo traccia come puntatore, non come directory) oppure aggiunto a `.gitignore`.

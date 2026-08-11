@@ -1,0 +1,72 @@
+// Post list — griglia di card
+
+.blog {
+	.site-main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-inline: var(--site-padding);
+		padding-block: 2.4rem;
+		max-width: var(--wp--style--global--wide-size);
+		margin-inline: auto;
+	}
+}
+
+.posts-section {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-s);
+	align-items: start;
+
+	> .wp-block-heading {
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	> .wp-block-buttons {
+		.is-style-text-link {
+			.wp-block-button__link {
+				font-size: var(--wp--preset--font-size--xs);
+			}
+		}
+	}
+}
+
+.posts-grid {
+	.wp-block-post-template {
+		display: grid !important;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-m);
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		@media (max-width: 1024px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (max-width: 600px) {
+			grid-template-columns: 1fr;
+		}
+
+		> li,
+		.wp-block-post {
+			display: flex;
+		}
+
+		.post-card {
+			width: 100%;
+		}
+	}
+
+	.wp-block-query-no-results {
+		grid-column: 1 / -1;
+		text-align: center;
+		color: var(--wp--preset--color--ink-light);
+		padding-block: var(--space-l);
+	}
+}
+
+.wp-block-ficus-related-posts {
+	margin-block-start: var(--space-xl);
+}

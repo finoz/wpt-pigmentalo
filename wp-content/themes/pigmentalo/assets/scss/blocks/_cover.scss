@@ -1,0 +1,22 @@
+.wp-block-cover {
+	padding: var(--space-m);
+
+	// ── Allineamento verticale — stili registrati in ficus/inc/block-styles.php
+	&.is-style-valign-top,
+	&.is-style-valign-space-between {
+		.wp-block-cover__inner-container {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			width: 100%;
+		}
+	}
+
+	&.is-style-valign-top .wp-block-cover__inner-container {
+		justify-content: flex-start;
+	}
+
+	&.is-style-valign-space-between .wp-block-cover__inner-container {
+		justify-content: space-between;
+	}
+}
