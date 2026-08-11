@@ -10,7 +10,13 @@
 @use 'gradients';
 
 // Block styles (contratto con ficus/inc/block-styles.php)
-@use 'blocks/button';
-@use 'blocks/group';
 @use 'blocks/navigation';
+@use 'blocks/button';
+@use 'blocks/groups-and-columns';
+@use 'blocks/group';           // override pigmentalo: card/section brand-specific
+@use 'blocks/images-and-galleries';
+@use 'blocks/cover';
+@use 'blocks/post-card';
+@use 'blocks/post-list';
+@use 'blocks/pagination';
 @use 'blocks/query';

@@ -1,0 +1,45 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: wp-content/themes/pigmentalo
+        run: npm install
+
+      - name: Build assets
+        working-directory: wp-content/themes/pigmentalo
+        run: npm run build
+
+      - name: Create theme zip
+        working-directory: wp-content/themes
+        run: |
+          zip -r pigmentalo.zip pigmentalo \
+            --exclude "pigmentalo/node_modules/*" \
+            --exclude "pigmentalo/assets/scss/*" \
+            --exclude "pigmentalo/assets/ts/*" \
+            --exclude "pigmentalo/package.json" \
+            --exclude "pigmentalo/package-lock.json" \
+            --exclude "pigmentalo/vite.config.*" \
+            --exclude "pigmentalo/tsconfig*"
+
+      - name: Create release and attach zip
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wp-content/themes/pigmentalo.zip
+          generate_release_notes: true

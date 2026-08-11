@@ -1,0 +1,40 @@
+<?php
+/**
+ * Title: Listato Articoli
+ * Slug: pigmentalo/query-posts
+ * Block Types: core/query
+ * Categories: posts
+ * Description: Query loop a 3 colonne con card verticale: immagine, categoria, titolo, abstract.
+ */
+?>
+<!-- wp:query {"queryId":1,"query":{"inherit":false,"postType":"post","perPage":9,"order":"desc","orderBy":"date"},"className":"posts-grid"} -->
+<div class="wp-block-query posts-grid">
+
+	<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
+	<!-- wp:group {"className":"post-card","layout":{"type":"default"}} -->
+	<div class="wp-block-group post-card">
+		<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
+		<!-- wp:group {"className":"post-card__body","layout":{"type":"default"}} -->
+		<div class="wp-block-group post-card__body">
+			<!-- wp:post-terms {"term":"category","className":"post-card__category"} /-->
+			<!-- wp:post-title {"isLink":true,"level":3,"className":"post-card__title"} /-->
+			<!-- wp:post-excerpt {"moreText":"","className":"post-card__excerpt"} /-->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+	<!-- /wp:post-template -->
+
+	<!-- wp:query-no-results -->
+	<!-- wp:paragraph -->
+	<p>Nessun articolo trovato.</p>
+	<!-- /wp:paragraph -->
+	<!-- /wp:query-no-results -->
+
+	<!-- wp:query-pagination {"className":"posts-pagination","layout":{"type":"flex","justifyContent":"space-between"}} -->
+	<!-- wp:query-pagination-previous {"label":"Precedente"} /-->
+	<!-- wp:query-pagination-next {"label":"Successivo"} /-->
+	<!-- /wp:query-pagination -->
+
+</div>
+<!-- /wp:query -->

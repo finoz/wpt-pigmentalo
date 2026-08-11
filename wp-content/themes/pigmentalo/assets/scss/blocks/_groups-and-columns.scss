@@ -1,0 +1,50 @@
+.wp-block-columns {
+	align-items: stretch; // colonne sempre alla stessa altezza (altezza = colonna più alta)
+
+	@media (min-width: 769px) {
+		// Default: colonne uguali — crescono equamente dallo 0
+		> * {
+			flex: 1 1 0%;
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-s);
+
+			// Il primo group/cover dentro una colonna riempie l'altezza disponibile.
+			// Consente card di altezza uguale in colonne con contenuto diverso.
+			> .wp-block-group,
+			> .wp-block-cover {
+				flex: 1;
+			}
+		}
+
+		// Se l'editor ha impostato una larghezza specifica (flex-basis inline),
+		// la colonna non cresce oltre: le altre si adattano allo spazio rimanente
+		> [style*="flex-basis"] {
+			flex-grow: 0;
+			flex-shrink: 1;
+		}
+	}
+}
+
+
+// Group block — varianti registrate in ficus/inc/block-styles.php
+// Le varianti card/section con valori brand-specifici sono in _group.scss.
+
+// ── Allineamento verticale contenuto ─────────────────────────────────────────
+// Stili registrati in ficus/inc/block-styles.php.
+// Funzionano sia su wp:group che su wp:cover (via inner-container).
+
+// Top: contenuto ancorato in cima
+.wp-block-group.is-style-valign-top {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+// Space-between: primo elemento in cima, ultimo in fondo
+// Utile per card con heading+testo in cima e button in fondo
+.wp-block-group.is-style-valign-space-between {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

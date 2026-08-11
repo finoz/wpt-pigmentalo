@@ -1,31 +1,70 @@
-// Tipografia
-// I valori vengono da theme.json via --wp--preset--font-*
-// Qui si definiscono solo regole strutturali e casi speciali
+// Tipografia pigmentalo
+// Font: General Sans Variable per tutto (display e sans puntano allo stesso font)
+
+// ── Scala responsive — override WP custom properties via :root ─────────────────
+//
+// theme.json definisce i valori MOBILE (il default WP).
+// Qui sovrascriviamo le stesse variabili per desktop.
+//
+//  slug    mobile    desktop    nome editor
+//  xxs     1.0rem    1.0rem     Nota        (fisso)
+//  xs      1.4rem    1.4rem     Didascalia  (fisso)
+//  sm      1.6rem    1.6rem     Etichetta   (fisso)
+//  base    1.8rem    1.8rem     Corpo       (fisso)
+//  md      2.0rem    2.4rem     Titolo S
+//  lg      2.8rem    3.6rem     Titolo M
+//  xl      3.6rem    4.8rem     Titolo L
+//  xxl     4.4rem    6.4rem     Display
+//  xxxl    5.0rem    8.0rem     Headline
+
+@media (min-width: 769px) {
+    :root {
+        --wp--preset--font-size--md:   2.4rem;
+        --wp--preset--font-size--lg:   3.6rem;
+        --wp--preset--font-size--xl:   4.8rem;
+        --wp--preset--font-size--xxl:  6.4rem;
+        --wp--preset--font-size--xxxl: 8.0rem;
+    }
+}
+
+// ── Base ──────────────────────────────────────────────────────────────────────
+
+body {
+    font-family: var(--wp--preset--font-family--sans);
+    font-size: var(--wp--preset--font-size--base);
+    color: var(--wp--preset--color--ink);
+    line-height: 1.5;
+}
+
+a {
+    color: inherit;
+}
+
+// Headings → display (stesso font del body, peso diverso)
+h1, h2, h3, h4, h5, h6,
+.wp-block-heading {
+    font-family: var(--wp--preset--font-family--display);
+    font-weight: 600;
+    line-height: 1.1;
+
+    &:is(h1) { font-size: var(--wp--preset--font-size--xxxl); }
+    &:is(h2) { font-size: var(--wp--preset--font-size--xxl);  }
+    &:is(h3) { font-size: var(--wp--preset--font-size--xl);   }
+    &:is(h4) { font-size: var(--wp--preset--font-size--lg);   }
+    &:is(h5) { font-size: var(--wp--preset--font-size--md);   }
+    &:is(h6) { font-size: var(--wp--preset--font-size--sm);   }
+}
 
 // Link nel contenuto editoriale
 .entry-content,
 .wp-block-post-content {
-  a:not([class]) {
-    color: var(--wp--preset--color--primary);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color var(--wp--custom--transition);
+    a:not([class]) {
+        color: var(--wp--preset--color--primary);
+        text-decoration: underline;
+        text-underline-offset: 3px;
 
-    &:hover {
-      color: var(--wp--preset--color--secondary);
+        &:hover {
+            color: var(--wp--preset--color--ink);
+        }
     }
-  }
-}
-
-// Spaziature tra blocchi nel contenuto
-.wp-block-post-content {
-  > * + * {
-    margin-block-start: var(--wp--preset--spacing--5);
-  }
-
-  > h2,
-  > h3,
-  > h4 {
-    margin-block-start: var(--wp--preset--spacing--7);
-  }
 }
