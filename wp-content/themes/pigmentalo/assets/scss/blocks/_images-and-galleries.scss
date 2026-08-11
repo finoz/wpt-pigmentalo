@@ -4,11 +4,11 @@
 	--swiper-navigation-disabled-opacity: 0.3;
 	--swiper-navigation-sides-offset:     1.2rem;
 	--swiper-pagination-color:            var(--wp--preset--color--white);
-	--swiper-pagination-bullet-size:      0.8rem;
+	--swiper-pagination-bullet-size:      1.2rem;
 	--swiper-pagination-bullet-inactive-color:   var(--wp--preset--color--white);
 	--swiper-pagination-bullet-inactive-opacity: 0.5;
-	--swiper-pagination-bullet-horizontal-gap:   0.4rem;
-	--swiper-pagination-bottom: 0.8rem;
+	--swiper-pagination-bullet-horizontal-gap:   0.6rem;
+	--swiper-pagination-bottom: 1.2rem;
 }
 
 // ── IMG semplice ──────────────────────────────────────────────────────────────
@@ -20,7 +20,7 @@
 		font-size: var(--wp--preset--font-size--xs);
 		color: var(--wp--preset--color--ink-light);
 		&::before {
-			content: '— ';
+			content: '↑ ';
 		}
 	}
 }
@@ -51,19 +51,33 @@
 	}
 
 	.swiper-button-prev,
-	.swiper-button-next {
-		top: 50%;
-		transform: translateY(-50%);
-		bottom: auto;
+	.swiper-horizontal .swiper-button-prev,
+	.swiper-button-next,
+	.swiper-horizontal .swiper-button-next {
+		top: unset;
+		left: 0;
+		bottom: 0;
+		transform: none;
+		margin-top: 0;
 		width: var(--swiper-navigation-size);
 		height: var(--swiper-navigation-size);
 		border: 0 solid;
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgba(0, 0, 0, 0);
 		transition: background-color 300ms ease;
-
+		&::before {
+			content: "←";
+			font-size: calc(var(--swiper-navigation-size) * 0.6);
+		}
 		svg {
-			width: auto;
-			height: calc(var(--swiper-navigation-size) * 0.5);
+			display: none;
+		}
+	}
+	.swiper-button-next,
+	.swiper-horizontal .swiper-button-next {
+		right: unset;
+		left: var(--swiper-navigation-size);
+		&::before {
+			content: "→";
 		}
 	}
 
@@ -77,17 +91,24 @@
 	// padding per i dots
 	&:has(.swiper-pagination) {
 		padding-bottom: calc(var(--swiper-pagination-bullet-size) * 3);
+		.swiper-button-prev,
+		.swiper-button-next {
+			bottom: calc(var(--swiper-pagination-bullet-size) * 3);
+		}
 	}
 
 	.swiper-pagination-bullets {
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
+		justify-content: start;
+		gap: var(--swiper-pagination-bullet-horizontal-gap);
 
 		.swiper-pagination-bullet {
-			width: 0.8rem;
-			height: 0.8rem;
+			width: var(--swiper-pagination-bullet-size);
+			height: var(--swiper-pagination-bullet-size);
 			border: 1px solid var(--wp--preset--color--primary);
+			border-radius: 0;
+			margin: 0 !important;
 			&.swiper-pagination-bullet-active {
 				background-color: var(--wp--preset--color--primary);
 			}
