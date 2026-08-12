@@ -32,7 +32,7 @@
 body {
     font-family: var(--wp--preset--font-family--sans);
     font-size: var(--wp--preset--font-size--base);
-    color: var(--wp--preset--color--ink);
+    color: var(--wp--preset--color--text);
     line-height: 1.5;
 }
 
@@ -62,9 +62,5 @@ h1, h2, h3, h4, h5, h6,
         color: var(--wp--preset--color--primary);
         text-decoration: underline;
         text-underline-offset: 3px;
-
-        &:hover {
-            color: var(--wp--preset--color--ink);
-        }
     }
 }

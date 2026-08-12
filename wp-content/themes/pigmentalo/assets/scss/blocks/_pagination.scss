@@ -12,29 +12,12 @@
 
 .posts-navigation,
 .wp-block-query-pagination {
-	position: relative;
+	grid-column: 2 / -1;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	justify-content: end;
+	width: 100%;
 	gap: 0;
-	margin-top: var(--space-l);
 	padding-block: var(--space-m);
-
-	&::after {
-		pointer-events: none;
-		content: "";
-		position: absolute;
-		width: 100%;
-		height: 3px;
-		background-color: var(--wp--preset--color--primary);
-		top: 0;
-	}
-
-	@media (min-width: 769px) {
-		&::after {
-			height: 4px;
-		}
-	}
 
 	&:has(.wp-block-query-pagination-previous):has(.wp-block-query-pagination-next),
 	&:has(.post-navigation-link-previous a):has(.post-navigation-link-next a) {

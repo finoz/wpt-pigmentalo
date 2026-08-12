@@ -3,15 +3,15 @@
 	flex-direction: row;
 	height: 100%;
 	gap: var(--space-s);
-	&:not(:first-child) {
-		margin-top: var(--space-m);
-		padding-top: var(--space-m);
-		border-top: 1px solid var(--wp--preset--color--ink-light);
+	@media (min-width: 1024px) {
+		border: 1px solid var(--wp--preset--color--surface-alt);
 	}
+	
 	// ── Immagine ──────────────────────────────────────────────────────────────
 
 	.wp-block-post-featured-image {
 		margin: 0;
+		flex-shrink: 0;
 		img {
 			display: block;
 			width: 12rem;
@@ -19,18 +19,43 @@
 			aspect-ratio: 1/1;
 			object-fit: cover;
 		}
+		@media (min-width: 769px) {
+			img {
+				width: 30dvw;
+				height: auto;
+				aspect-ratio: 4/3;
+			}
+		}
+		@media (min-width: 1024px) {
+			img {
+				width: 30rem;
+			}
+		}
+		@media (min-width: 1280px) {
+			img {
+				width: 40rem;
+			}
+		}
 	}
-
-	// ── Corpo ─────────────────────────────────────────────────────────────────
 
 	&__body {
 		display: flex;
 		flex-direction: column;
 		gap: 1.6rem;
+		@media (min-width: 1024px) {
+			padding: var(--space-s) var(--space-s) var(--space-s) 0;
+		}
+		[class*="terms"] {
+			order: 3;
+		}
+		[class*="title"] {
+			order: 1;
+		}
+		[class*="excerpt"] {
+			order: 2;
+		}
 	}
-
-	// ── Categoria ─────────────────────────────────────────────────────────────
-
+	
 	.wp-block-post-terms.post-card__category,
 	.post-card__category {
 		font-family: var(--wp--preset--font-family--display);
@@ -38,13 +63,11 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.06em;
-		color: var(--wp--preset--color--primary);
-		margin: 0;
 		display: flex;
 		flex-direction: row;
 		gap: 0.4rem;
 		flex-wrap: wrap;
-
+		margin-top: auto;
 		[class*="separator"] {
 			display: none;
 		}
@@ -60,18 +83,13 @@
 		}
 	}
 
-	// ── Titolo ────────────────────────────────────────────────────────────────
-
 	.wp-block-post-title.post-card__title,
 	.post-card__title {
 		font-family: var(--wp--preset--font-family--display);
 		font-size: var(--wp--preset--font-size--md);
 		font-weight: 600;
-		line-height: 1.2;
 		margin: 0;
-
 		a {
-			color: var(--wp--preset--color--ink);
 			text-decoration: none;
 			&:hover {
 				color: var(--wp--preset--color--primary);
@@ -79,19 +97,8 @@
 		}
 	}
 
-	// ── Abstract ──────────────────────────────────────────────────────────────
-
 	.wp-block-post-excerpt.post-card__excerpt,
 	.post-card__excerpt {
 		font-size: var(--wp--preset--font-size--xs);
-		color: var(--wp--preset--color--ink-light);
-		line-height: 1.5;
-		margin: 0;
-
-		p { margin: 0; }
-
-		.wp-block-post-excerpt__more-link {
-			display: none;
-		}
 	}
 }

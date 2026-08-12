@@ -17,6 +17,10 @@
       ]
     },
 
+    "custom": {
+      "reading-size": "720px"
+    },
+
     "color": {
       "palette": [
         { "slug": "primary",     "color": "#87235a", "name": "Viola" },

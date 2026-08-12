@@ -7,9 +7,12 @@
 }
 
 // Testo con gradient (clip)
-.has-brand-gradient-text {
-    background: var(--wp--preset--gradient--brand);
+@mixin gradient-text($gradient : var(--wp--preset--gradient--brand)) {
+    background: $gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+.has-brand-gradient-text {
+    @include gradient-text(var(--wp--preset--gradient--brand));
 }

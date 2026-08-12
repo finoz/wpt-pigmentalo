@@ -1,4 +1,5 @@
 // Post list — griglia di card
+@use '../gradients' as *;
 
 .blog {
 	.site-main {
@@ -7,7 +8,7 @@
 		align-items: center;
 		padding-inline: var(--site-padding);
 		padding-block: 2.4rem;
-		max-width: var(--wp--style--global--wide-size);
+		max-width: var(--grid-content);
 		margin-inline: auto;
 	}
 }
@@ -33,72 +34,37 @@
 }
 
 .posts-grid {
+	@media (min-width: 1024px) {
+		display: grid;
+		grid-template-columns: 1fr 5fr;
+		gap: var(--space-l);
+		&::before {
+			content: '>';
+			font-weight: 600;
+			font-size: 12rem;
+			@include gradient-text(var(--wp--preset--gradient--viola-giallo));
+		}
+	}
 	.wp-block-post-template {
-		display: grid !important;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--space-m);
-		list-style: none;
 		margin: 0;
 		padding: 0;
-
-		@media (max-width: 1024px) {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		@media (max-width: 600px) {
-			grid-template-columns: 1fr;
-		}
-
 		> li,
 		.wp-block-post {
 			display: flex;
-		}
-
-		.post-card {
-			width: 100%;
+			@media (max-width: 1023px) {
+				&:not(:first-child) {
+					margin-top: var(--space-m);
+					padding-top: var(--space-m);
+					border-top: 1px solid var(--wp--preset--color--surface-alt);
+				}
+			}
 		}
 	}
 
 	.wp-block-query-no-results {
 		grid-column: 1 / -1;
 		text-align: center;
-		color: var(--wp--preset--color--ink-light);
+		color: var(--wp--preset--color--surface-alt);
 		padding-block: var(--space-l);
-	}
-}
-
-.wp-block-ficus-related-posts {
-	margin-block-start: var(--space-xl);
-}
-
-// ── Archivio colonna singola (template archive.html pigmentalo) ───────────────
-
-.posts-list-archive {
-	.wp-block-post-template {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex !important;
-		flex-direction: column;
-		gap: 0;
-
-		> li,
-		.wp-block-post {
-			display: flex;
-		}
-
-		.post-card {
-			width: 100%;
-		}
-	}
-
-	.wp-block-query-no-results {
-		text-align: center;
-		color: var(--wp--preset--color--ink-light);
-		padding-block: var(--space-l);
-	}
-
-	.wp-block-query-pagination {
-		margin-block-start: var(--space-l);
 	}
 }

@@ -18,7 +18,6 @@
 		margin-top: 0.8rem;
 		font-weight: 500;
 		font-size: var(--wp--preset--font-size--xs);
-		color: var(--wp--preset--color--ink-light);
 		&::before {
 			content: '↑ ';
 		}
@@ -181,11 +180,6 @@ dialog.gallery-lightbox {
 		}
 		&::before { transform: rotate(45deg); }
 		&::after  { transform: rotate(-45deg); }
-
-		&:hover::before,
-		&:hover::after {
-			background: var(--wp--preset--color--ink-light);
-		}
 	}
 
 	.gallery-lightbox__swiper {
@@ -232,7 +226,6 @@ dialog.gallery-lightbox {
 	.gallery-lightbox__caption {
 		margin-top: 1.2rem;
 		font-size: var(--wp--preset--font-size--xs);
-		color: var(--wp--preset--color--ink-light);
 		text-align: center;
 	}
 }

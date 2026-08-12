@@ -316,8 +316,7 @@
 		position: absolute;
 		width: 100dvw;
 		height: 1px;
-		background: currentColor;
-		opacity: 0.1;
+		background: var(--wp--preset--color--surface-alt);
 		bottom: 0;
 		left: 50%;
 		transform: translateX(-50%);
