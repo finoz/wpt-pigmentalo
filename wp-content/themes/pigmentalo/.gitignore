@@ -1,0 +1,8 @@
+# Output Vite
+assets/dist/
+
+# Sentinel dev server
+.vite-dev
+
+# Dipendenze
+node_modules/

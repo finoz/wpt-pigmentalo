@@ -1,16 +1,13 @@
-import { defineConfig, Plugin } from 'vite'
-import { resolve }             from 'path'
-import * as fs                 from 'fs'
-
-const port     = parseInt( process.env.VITE_PORT ?? '5173', 10 )
-const flagFile = resolve( __dirname, '.vite-dev' )
+import { defineConfig, loadEnv, Plugin } from 'vite'
+import { resolve }                       from 'path'
+import * as fs                           from 'fs'
 
 /**
- * Plugin sentinel: crea .vite-dev quando il dev server parte,
- * lo rimuove quando si ferma. PHP usa il file per rilevare dev mode
- * senza bisogno di fsockopen (che non funziona da Docker verso il Mac host).
+ * Plugin sentinel: crea .vite-dev quando il dev server parte (contiene la porta),
+ * lo rimuove quando si ferma. PHP usa il file per rilevare dev mode e leggere
+ * la porta senza bisogno di costanti in wp-config.php.
  */
-const viteDevFlag = (): Plugin => ( {
+const viteDevFlag = ( port: number, flagFile: string ): Plugin => ( {
     name: 'vite-dev-flag',
     configureServer() {
         fs.writeFileSync( flagFile, String( port ) )
@@ -21,32 +18,41 @@ const viteDevFlag = (): Plugin => ( {
     },
 } )
 
-export default defineConfig( {
-    plugins: [ viteDevFlag() ],
+export default defineConfig( ( { mode } ) => {
+    // Carica le variabili dal file .env nella root del tema.
+    // Il terzo argomento '' rimuove il filtro sul prefisso VITE_,
+    // così VITE_PORT è disponibile anche se non ha prefisso VITE_.
+    const env      = loadEnv( mode, resolve( __dirname, '../../..' ), '' )
+    const port     = parseInt( env.VITE_PORT ?? '5173', 10 )
+    const flagFile = resolve( __dirname, '.vite-dev' )
 
-    root: resolve( __dirname, 'assets' ),
+    return {
+        plugins: [ viteDevFlag( port, flagFile ) ],
 
-    build: {
-        outDir:      resolve( __dirname, 'assets/dist' ),
-        emptyOutDir: true,
-        manifest:    true,
-        minify:      'esbuild',
-        target:      'esnext',
-        rollupOptions: {
-            input: {
-                main: resolve( __dirname, 'assets/ts/main.ts' ),
+        root: resolve( __dirname, 'assets' ),
+
+        build: {
+            outDir:      resolve( __dirname, 'assets/dist' ),
+            emptyOutDir: true,
+            manifest:    true,
+            minify:      'esbuild',
+            target:      'esnext',
+            rollupOptions: {
+                input: {
+                    main: resolve( __dirname, 'assets/ts/main.ts' ),
+                },
             },
         },
-    },
 
-    css: {
-        devSourcemap: true,
-    },
+        css: {
+            devSourcemap: true,
+        },
 
-    server: {
-        port,
-        strictPort: true,
-        cors:       true,
-        watch:      { usePolling: true },
-    },
+        server: {
+            port,
+            strictPort: true,
+            cors:       true,
+            watch:      { usePolling: true },
+        },
+    }
 } )

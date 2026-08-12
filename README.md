@@ -14,10 +14,10 @@ Basato su [wpt-ficus](https://github.com/finoz/wpt-ficus) come parent theme.
 ```bash
 # 1. Avvia WordPress
 docker compose up -d
-# → WP su http://localhost:8082
-# → phpMyAdmin su http://localhost:8083
+# → WP su http://localhost:8080
+# → phpMyAdmin su http://localhost:8081
 
-# 2. Setup WP (prima volta): http://localhost:8082/wp-admin
+# 2. Setup WP (prima volta): http://localhost:8080/wp-admin
 #    Attiva il tema "Pigmentalo" (il parent Ficus viene caricato automaticamente)
 
 # 3. Avvia Vite in modalità dev
@@ -26,6 +26,8 @@ nvm use
 npm install   # solo la prima volta
 npm run dev
 ```
+
+N.B. Per modificare le porte locali -nell'evenienza di far girare più progetti in parallelo- va creato e modificato il file .env (da .env.example).
 
 ## Build produzione
 
