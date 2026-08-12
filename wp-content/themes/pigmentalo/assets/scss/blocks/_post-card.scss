@@ -1,29 +1,23 @@
-// Post card — verticale (default), orizzontale (archivio), lista (correlate/compatta)
-// Usata dentro Query Loop (archivio, componenti editoriali) e nel blocco PHP related-posts.
-
 .post-card {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	height: 100%;
 	gap: var(--space-s);
-
+	&:not(:first-child) {
+		margin-top: var(--space-m);
+		padding-top: var(--space-m);
+		border-top: 1px solid var(--wp--preset--color--ink-light);
+	}
 	// ── Immagine ──────────────────────────────────────────────────────────────
 
 	.wp-block-post-featured-image {
 		margin: 0;
-		overflow: hidden;
-
 		img {
 			display: block;
-			width: 100%;
-			height: 100%;
+			width: 12rem;
+			width: 12rem;
+			aspect-ratio: 1/1;
 			object-fit: cover;
-			aspect-ratio: 4 / 3;
-			transition: transform 150ms ease;
-		}
-
-		&:hover img {
-			transform: scale(1.03);
 		}
 	}
 
@@ -97,153 +91,6 @@
 		p { margin: 0; }
 
 		.wp-block-post-excerpt__more-link {
-			display: none;
-		}
-	}
-}
-
-// ── Variante orizzontale — archivio ──────────────────────────────────────────
-//
-// Immagine a sinistra (~38%), contenuto a destra.
-// Separatore inferiore tra le card.
-
-.post-card--horizontal {
-	flex-direction: row;
-	gap: var(--space-m);
-	padding-block: var(--space-m);
-	border-bottom: 1px solid var(--wp--preset--color--border);
-	height: auto; // override: non serve fill in lista colonna singola
-
-	&:first-child {
-		border-top: 1px solid var(--wp--preset--color--border);
-	}
-
-	.wp-block-post-featured-image {
-		flex: 0 0 38%;
-
-		img {
-			aspect-ratio: 4 / 3;
-		}
-	}
-
-	.post-card__body {
-		flex: 1;
-		justify-content: center;
-	}
-
-	.wp-block-post-title.post-card__title,
-	.post-card__title {
-		font-size: var(--wp--preset--font-size--lg);
-	}
-
-	@media (max-width: 600px) {
-		flex-direction: column;
-		gap: var(--space-s);
-	}
-}
-
-// ── Variante lista — correlate / query compatta ───────────────────────────────
-//
-// Riga: numero | titolo | categoria | thumbnail
-// Il numero viene generato tramite CSS counter sul <li> o dalla classe .post-card__number via PHP.
-
-.posts-list {
-	.wp-block-post-template {
-		counter-reset: post-counter;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: flex !important;
-		flex-direction: column;
-		gap: 0;
-
-		> li,
-		.wp-block-post {
-			counter-increment: post-counter;
-			display: flex;
-		}
-
-		.post-card {
-			width: 100%;
-		}
-	}
-}
-
-.post-card--list {
-	flex-direction: row;
-	align-items: center;
-	gap: var(--space-s);
-	padding-block: var(--space-s);
-	border-bottom: 1px solid var(--wp--preset--color--border);
-	height: auto;
-
-	&:first-child {
-		border-top: 1px solid var(--wp--preset--color--border);
-	}
-
-	// ── Numero ────────────────────────────────────────────────────────────────
-	// Via CSS counter (Query Loop) o elemento .post-card__number (PHP)
-
-	&::before {
-		content: counter(post-counter, decimal-leading-zero);
-		font-size: var(--wp--preset--font-size--xs);
-		font-weight: 400;
-		color: var(--wp--preset--color--ink-light);
-		flex: 0 0 3.2rem;
-		line-height: 1;
-	}
-
-	.post-card__number {
-		font-size: var(--wp--preset--font-size--xs);
-		font-weight: 400;
-		color: var(--wp--preset--color--ink-light);
-		flex: 0 0 3.2rem;
-		line-height: 1;
-	}
-
-	// ── Titolo ────────────────────────────────────────────────────────────────
-
-	.wp-block-post-title.post-card__title,
-	.post-card__title {
-		flex: 1;
-		font-size: var(--wp--preset--font-size--base);
-		font-weight: 700;
-		line-height: 1.3;
-	}
-
-	// ── Categoria ─────────────────────────────────────────────────────────────
-
-	.wp-block-post-terms.post-card__category,
-	.post-card__category {
-		flex: 0 0 auto;
-
-		a {
-			pointer-events: auto; // in lista i badge sono cliccabili
-		}
-	}
-
-	// ── Thumbnail ─────────────────────────────────────────────────────────────
-
-	.wp-block-post-featured-image {
-		flex: 0 0 6.4rem;
-
-		img {
-			width: 6.4rem;
-			height: 6.4rem;
-			aspect-ratio: 1;
-		}
-	}
-
-	// ── Senza excerpt ─────────────────────────────────────────────────────────
-
-	.wp-block-post-excerpt.post-card__excerpt,
-	.post-card__excerpt {
-		display: none;
-	}
-
-	@media (max-width: 480px) {
-		.wp-block-post-terms.post-card__category,
-		.post-card__category {
 			display: none;
 		}
 	}

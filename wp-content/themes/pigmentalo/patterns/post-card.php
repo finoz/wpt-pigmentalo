@@ -4,12 +4,12 @@
  * Slug: pigmentalo/post-card
  * Categories: posts
  * Block Types: core/post-template
- * Description: Card verticale: immagine featured, categoria, titolo, abstract.
+ * Description: Card articolo: immagine featured, categoria, titolo, abstract.
  */
 ?>
 <!-- wp:group {"className":"post-card","layout":{"type":"default"}} -->
 <div class="wp-block-group post-card">
-	<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
+	<!-- wp:post-featured-image {"isLink":true} /-->
 	<!-- wp:group {"className":"post-card__body","layout":{"type":"default"}} -->
 	<div class="wp-block-group post-card__body">
 		<!-- wp:post-terms {"term":"category","className":"post-card__category"} /-->

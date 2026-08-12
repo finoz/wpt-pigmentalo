@@ -34,7 +34,7 @@ $posts_url = get_option( 'page_for_posts' )
 		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 		<!-- wp:group {"className":"post-card","layout":{"type":"default"}} -->
 		<article class="wp-block-group post-card">
-			<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
+			<!-- wp:post-featured-image {"isLink":true} /-->
 			<!-- wp:group {"className":"post-card__body","layout":{"type":"default"}} -->
 			<div class="wp-block-group post-card__body">
 				<!-- wp:post-terms {"term":"category","className":"post-card__category"} /-->

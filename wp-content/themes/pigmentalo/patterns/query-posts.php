@@ -4,7 +4,7 @@
  * Slug: pigmentalo/query-posts
  * Block Types: core/query
  * Categories: posts
- * Description: Query loop a 3 colonne con card verticale: immagine, categoria, titolo, abstract.
+ * Description: Query loop con card standard: immagine, categoria, titolo, abstract.
  */
 ?>
 <!-- wp:query {"queryId":1,"query":{"inherit":false,"postType":"post","perPage":9,"order":"desc","orderBy":"date"},"className":"posts-grid"} -->
@@ -13,7 +13,7 @@
 	<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 	<!-- wp:group {"className":"post-card","layout":{"type":"default"}} -->
 	<div class="wp-block-group post-card">
-		<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"4/3"} /-->
+		<!-- wp:post-featured-image {"isLink":true} /-->
 		<!-- wp:group {"className":"post-card__body","layout":{"type":"default"}} -->
 		<div class="wp-block-group post-card__body">
 			<!-- wp:post-terms {"term":"category","className":"post-card__category"} /-->
