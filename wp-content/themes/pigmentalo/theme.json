@@ -18,7 +18,7 @@
     },
 
     "custom": {
-      "reading-size": "720px"
+      "reading-size": "880px"
     },
 
     "color": {
@@ -26,11 +26,12 @@
         { "slug": "primary",     "color": "#87235a", "name": "Viola" },
         { "slug": "secondary",   "color": "#1c52ac", "name": "Blu" },
         { "slug": "accent",      "color": "#e5ce00", "name": "Giallo" },
-        { "slug": "surface",     "color": "#f0f0f0", "name": "Light Gray" },
-        { "slug": "surface-alt", "color": "#e0e0e0", "name": "Surface Alt" },
-        { "slug": "text",        "color": "#000000", "name": "Black" },
-        { "slug": "text-light",  "color": "#555555", "name": "Medium Gray" },
-        { "slug": "white",       "color": "#ffffff", "name": "White" }
+        { "slug": "surface",     "color": "#f0f0f0", "name": "Grigio chiaro" },
+        { "slug": "surface-alt", "color": "#e0e0e0", "name": "Quasi bianco" },
+        { "slug": "text",        "color": "#000000", "name": "Nero" },
+        { "slug": "text-light",  "color": "#555555", "name": "Grigio medio" },
+        { "slug": "white",       "color": "#ffffff", "name": "Bianco" },
+        { "slug": "bordered",    "color": "transparent", "name": "Bordato" }
       ],
       "gradients": [
         {

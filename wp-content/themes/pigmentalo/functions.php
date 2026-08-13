@@ -21,6 +21,14 @@ add_action( 'after_setup_theme', function () {
 } );
 add_filter( 'should_load_remote_block_patterns', '__return_false' );
 
+// ── Block styles ──────────────────────────────────────────────────────────────
+add_action( 'init', function () {
+    register_block_style( 'core/group', [
+        'name'  => 'left-column',
+        'label' => 'Colonna sinistra',
+    ] );
+} );
+
 add_action( 'after_setup_theme', function () {
     ficus_add_editor_styles(
         get_stylesheet_directory(),

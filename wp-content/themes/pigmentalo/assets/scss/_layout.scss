@@ -20,7 +20,7 @@
 	// Alias variabili grid con fallback hardcoded
 	// Le variabili --wp--* vengono generate da WP nel <head>;
 	// il fallback garantisce che il grid funzioni anche se non disponibili.
-	--grid-reading: var(--wp--custom--reading-size, 720px);
+	--grid-reading: var(--wp--custom--reading-size, 880px);
 	--grid-content: var(--wp--style--global--content-size, 1280px);
 	--grid-wide:    var(--wp--style--global--wide-size, 1440px);
 
@@ -88,6 +88,9 @@
 [class*="wp-block"] {
 	&.has-background {
 		padding: 3.2rem;
+		&.has-bordered-background-color {
+			border: 1px solid currentColor;
+		}
 	}
 }
 
@@ -104,12 +107,6 @@
 //   wide     → centrato, padding 1fr simmetrico
 //   content  → allineato a destra di wide, gutter solo a sinistra
 //   reading  → allineato a destra di content, gutter solo a sinistra
-//
-// reading-end = content-end = wide-end: stesso bordo destro.
-// Il padding destro è 1fr speculare al sinistro → wide è centrato nel full.
-//
-// Soglie (invariate): 720+160=880, 1280+160=1440, 1440+160=1600.
-// Se i valori in theme.json cambiano, ricalcolare anche qui.
 
 .wp-block-post-content,
 .is-root-container,
@@ -185,6 +182,16 @@
 		grid-column: wide-start / wide-end;
 		@media (min-width: 768px) {
 			grid-column: reading-start / reading-end;
+		}
+	}
+
+	// Colonna sinistra — occupa il gutter tra content-start e reading-start.
+	// Disponibile solo da 880px: sotto quella soglia i due punti coincidono
+	// e l'elemento tornerebbe al suo default normale.
+	> .is-style-left-column {
+		@media (min-width: 880px) {
+			grid-column: content-start / reading-start;
+			padding-right: var(--space-m);
 		}
 	}
 }
