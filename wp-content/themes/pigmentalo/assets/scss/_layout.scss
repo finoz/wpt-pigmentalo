@@ -206,6 +206,7 @@
 	// Disponibile solo da 880px: sotto quella soglia i due punti coincidono
 	// e l'elemento tornerebbe al suo default normale.
 	> .is-style-left-column {
+		margin-left: 0;
 		@media (min-width: 880px) {
 			grid-column: content-start / reading-start;
 			padding-right: var(--space-m);

@@ -1,61 +1,17 @@
 .post-card {
-	display: flex;
-	flex-direction: row;
-	height: 100%;
-	gap: var(--space-s);
-	@media (min-width: 1024px) {
-		border: 1px solid var(--wp--preset--color--surface-alt);
-	}
-	
-	// ── Immagine ──────────────────────────────────────────────────────────────
-
-	.wp-block-post-featured-image {
+	.wp-block-post-title.post-card__title,
+	.post-card__title {
+		font-family: var(--wp--preset--font-family--display);
+		font-size: var(--wp--preset--font-size--md);
+		font-weight: 600;
 		margin: 0;
-		flex-shrink: 0;
-		img {
-			display: block;
-			width: 12rem;
-			width: 12rem;
-			aspect-ratio: 1/1;
-			object-fit: cover;
-		}
-		@media (min-width: 769px) {
-			img {
-				width: 30dvw;
-				height: auto;
-				aspect-ratio: 4/3;
-			}
-		}
-		@media (min-width: 1024px) {
-			img {
-				width: 30rem;
-			}
-		}
-		@media (min-width: 1280px) {
-			img {
-				width: 40rem;
+		a {
+			text-decoration: none;
+			&:hover {
+				color: var(--wp--preset--color--primary);
 			}
 		}
 	}
-
-	&__body {
-		display: flex;
-		flex-direction: column;
-		gap: 1.6rem;
-		@media (min-width: 1024px) {
-			padding: var(--space-s) var(--space-s) var(--space-s) 0;
-		}
-		[class*="terms"] {
-			order: 3;
-		}
-		[class*="title"] {
-			order: 1;
-		}
-		[class*="excerpt"] {
-			order: 2;
-		}
-	}
-	
 	.wp-block-post-terms.post-card__category,
 	.post-card__category {
 		font-family: var(--wp--preset--font-family--display);
@@ -82,23 +38,121 @@
 			pointer-events: none;
 		}
 	}
-
-	.wp-block-post-title.post-card__title,
-	.post-card__title {
-		font-family: var(--wp--preset--font-family--display);
-		font-size: var(--wp--preset--font-size--md);
-		font-weight: 600;
-		margin: 0;
-		a {
-			text-decoration: none;
-			&:hover {
-				color: var(--wp--preset--color--primary);
+	&:not(.post-card--light) {
+		display: flex;
+		flex-direction: row;
+		height: 100%;
+		gap: var(--space-s);
+		@media (min-width: 1024px) {
+			border: 1px solid var(--wp--preset--color--surface-alt);
+		}
+		
+		// ── Immagine ──────────────────────────────────────────────────────────────
+	
+		.wp-block-post-featured-image {
+			margin: 0;
+			flex-shrink: 0;
+			img {
+				display: block;
+				width: 12rem;
+				width: 12rem;
+				aspect-ratio: 1/1;
+				object-fit: cover;
+			}
+			@media (min-width: 769px) {
+				img {
+					width: 30dvw;
+					height: auto;
+					aspect-ratio: 4/3;
+				}
+			}
+			@media (min-width: 1024px) {
+				img {
+					width: 30rem;
+				}
+			}
+			@media (min-width: 1280px) {
+				img {
+					width: 40rem;
+				}
 			}
 		}
+	
+		.post-card__body {
+			display: flex;
+			flex-direction: column;
+			gap: 1.6rem;
+			@media (min-width: 1024px) {
+				padding: var(--space-s) var(--space-s) var(--space-s) 0;
+			}
+			[class*="terms"] {
+				order: 3;
+			}
+			[class*="title"] {
+				order: 1;
+			}
+			[class*="excerpt"] {
+				order: 2;
+			}
+		}
+	
+		.wp-block-post-excerpt.post-card__excerpt,
+		.post-card__excerpt {
+			font-size: var(--wp--preset--font-size--xs);
+		}
 	}
+}
 
-	.wp-block-post-excerpt.post-card__excerpt,
-	.post-card__excerpt {
-		font-size: var(--wp--preset--font-size--xs);
+// light version
+.post-card.post-card--light {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: var(--space-s);
+	.post-card__body {
+			display: grid;
+			grid-template-columns: 3rem 1fr;
+			grid-template-rows: auto auto;
+			grid-template-areas: 
+				"number title"
+				"number taxonomy";
+			flex-direction: column;
+			gap: var(--space-s);
+			&::before {
+				grid-area: number;
+			}
+			@media (min-width: 768px) {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				gap: var(--space-s);
+			}
+	}
+	.wp-block-post-title {
+		grid-area: title;
+		a {
+			color: currentColor;
+		}
+	}
+	.wp-block-post-terms {
+		grid-area: taxonomy;
+		margin-top: unset;
+		@media (min-width: 768px) {
+			margin-left: auto;
+		}
+	}
+	.wp-block-post-featured-image {
+		display: none;
+		@media (min-width: 768px) {
+			display: block;
+			width: auto;
+			height: 8rem;
+			margin: 0;
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
 	}
 }
