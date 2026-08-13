@@ -1,0 +1,28 @@
+// Utility — classi di visibilità responsive
+//
+// .hide-from-{bp}  → display: none da quel breakpoint in su (min-width)
+// .hide-until-{bp} → display: none sotto quel breakpoint (max-width)
+//
+// Uso: togli le virgolette dai valori così SCSS può fare calc($value - 1px).
+
+$breakpoints: (
+    'tablet':    768px,
+    'reading':   880px,
+    'landscape': 1024px,
+    'content':   1280px,
+    'wide':      1440px,
+);
+
+@each $name, $value in $breakpoints {
+    .hide-from-#{$name} {
+        @media (min-width: $value) {
+            display: none !important;
+        }
+    }
+
+    .hide-until-#{$name} {
+        @media (max-width: calc($value - 1px)) {
+            display: none !important;
+        }
+    }
+}
