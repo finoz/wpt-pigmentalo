@@ -261,6 +261,10 @@
 	flex-wrap: wrap;
 	gap: 2.4rem;
 	margin-inline: auto; // centratura default
+	&.wp-block-columns {
+		margin-inline: unset;
+		flex-wrap: nowrap;
+	}
 }
 
 // grid: usato dal query block (post-template)
