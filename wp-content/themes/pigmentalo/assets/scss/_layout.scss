@@ -148,6 +148,23 @@
 			[full-start]
 			minmax(var(--site-padding), 1fr)
 			[wide-start]
+			minmax(0px, calc((var(--grid-wide) - var(--grid-content)) / 2))
+			[content-start]
+			calc(var(--grid-content) - var(--grid-reading))
+			[reading-start]
+			var(--grid-reading)
+			[reading-end content-end]
+			minmax(0px, calc((var(--grid-wide) - var(--grid-content)) / 2))
+			[wide-end]
+			minmax(var(--site-padding), 1fr)
+			[full-end];
+	}
+
+	@media (min-width: 1600px) {
+		grid-template-columns:
+			[full-start]
+			minmax(var(--site-padding), 1fr)
+			[wide-start]
 			calc((var(--grid-wide) - var(--grid-content)) / 2)
 			[content-start]
 			calc(var(--grid-content) - var(--grid-reading))
