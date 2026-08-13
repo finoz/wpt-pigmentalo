@@ -4,7 +4,7 @@
 	padding-inline: var(--site-padding);
 	display: flex;
 	justify-content: center;
-
+	max-width: var(--grid-content);
 	> * {
 		flex: 1 1 0%;
 	}
@@ -12,7 +12,6 @@
 
 .posts-navigation,
 .wp-block-query-pagination {
-	grid-column: 2 / -1;
 	display: flex;
 	justify-content: end;
 	width: 100%;
