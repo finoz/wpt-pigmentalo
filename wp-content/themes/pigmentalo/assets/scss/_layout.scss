@@ -128,7 +128,7 @@
 		minmax(var(--site-padding), 1fr)
 		[full-end];
 
-	@media (min-width: 880px) {
+	@media (min-width: 1024px) {
 		grid-template-columns:
 			[full-start]
 			minmax(var(--site-padding), 1fr)
@@ -261,10 +261,6 @@
 	flex-wrap: wrap;
 	gap: 2.4rem;
 	margin-inline: auto; // centratura default
-	&.wp-block-columns {
-		margin-inline: unset;
-		flex-wrap: nowrap;
-	}
 }
 
 // grid: usato dal query block (post-template)
